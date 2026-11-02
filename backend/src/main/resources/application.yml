@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: taskflow
+  datasource:
+    url: ${DB_URL:jdbc:h2:mem:taskflow;DB_CLOSE_DELAY=-1}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+server:
+  port: ${PORT:8080}
