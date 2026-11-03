@@ -1,0 +1,31 @@
+package com.taskflow.dto
+
+import com.taskflow.domain.Project
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Size
+import java.time.Instant
+
+data class CreateProjectRequest(
+	@field:NotBlank(message = "Name is required")
+	@field:Size(max = 100, message = "Name must be at most 100 characters")
+	val name: String,
+
+	@field:Size(max = 1000, message = "Description must be at most 1000 characters")
+	val description: String? = null,
+)
+
+data class ProjectResponse(
+	val id: Long,
+	val name: String,
+	val description: String?,
+	val owner: UserResponse,
+	val createdAt: Instant,
+)
+
+fun Project.toResponse() = ProjectResponse(
+	id = requireNotNull(id) { "Project must be persisted before mapping" },
+	name = name,
+	description = description,
+	owner = owner.toResponse(),
+	createdAt = createdAt,
+)
