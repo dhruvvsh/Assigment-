@@ -1,9 +1,13 @@
 spring:
   application:
     name: taskflow
+  config:
+    # Optional git-ignored backend/.env file (KEY=value lines) so credentials such as the
+    # Supabase connection never live in code. Real environment variables also work.
+    import: optional:file:.env[.properties]
   datasource:
-    # Defaults match the Postgres container in the root docker-compose.yml (local development).
-    # Override with environment variables in any other environment.
+    # Defaults match the Postgres container in the root docker-compose.yml.
+    # Set DB_URL / DB_USERNAME / DB_PASSWORD (e.g. in backend/.env) to use Supabase instead.
     url: ${DB_URL:jdbc:postgresql://localhost:5432/taskflow}
     username: ${DB_USERNAME:taskflow}
     password: ${DB_PASSWORD:taskflow}

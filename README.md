@@ -22,10 +22,31 @@ A small team task tracker: a Spring Boot + Kotlin REST API and a React + TypeScr
 
 ## Quick start (development)
 
-```bash
-# Database (PostgreSQL in Docker) -> localhost:5432
-docker compose up -d db
+### Database
 
+The backend reads its database settings from environment variables, or from a git-ignored
+`backend/.env` file. Pick one:
+
+**Option A: Supabase (PostgreSQL).** Create `backend/.env` with:
+
+```properties
+DB_URL=jdbc:postgresql://aws-0-<region>.pooler.supabase.com:5432/postgres?sslmode=require
+DB_USERNAME=postgres.<project-ref>
+DB_PASSWORD=<database password>
+JWT_SECRET=<random string, 32+ characters>
+```
+
+Use the **Session pooler** values from Supabase (Project Settings > Database > Connection string).
+
+**Option B: local PostgreSQL in Docker** (no `.env` needed, defaults match):
+
+```bash
+docker compose up -d db
+```
+
+### Run
+
+```bash
 # Backend  -> http://localhost:8080
 cd backend && ./mvnw spring-boot:run
 
