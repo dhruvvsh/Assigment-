@@ -5,8 +5,8 @@ import * as authApi from '../api/auth'
 import { setUnauthorizedHandler } from '../api/axiosClient'
 import { clearSession, loadSession, saveSession } from '../lib/sessionStorage'
 import type { AuthResponse, LoginCredentials, RegisterData, Session } from '../types'
-import { AuthContext } from './authContext'
-import type { AuthContextValue } from './authContext'
+import { AuthContext } from './authContextDefinition'
+import type { AuthContextValue } from './authContextDefinition'
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient()
