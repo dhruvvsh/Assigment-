@@ -31,3 +31,11 @@ export function validateRegister({ name, email, password }: RegisterData): Field
   else if (password.length > 72) errors.password = 'Password must be at most 72 characters'
   return errors
 }
+
+export function validateProject({ name, description }: { name: string; description: string }): FieldErrors {
+  const errors: FieldErrors = {}
+  if (!name.trim()) errors.name = 'Name is required'
+  else if (name.trim().length > 100) errors.name = 'Name must be at most 100 characters'
+  if (description.length > 1000) errors.description = 'Description must be at most 1000 characters'
+  return errors
+}
