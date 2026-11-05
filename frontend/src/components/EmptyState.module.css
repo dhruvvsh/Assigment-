@@ -1,0 +1,12 @@
+.empty {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.empty p {
+  margin: 0 0 1rem;
+  color: var(--color-muted);
+}
