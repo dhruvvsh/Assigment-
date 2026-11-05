@@ -38,6 +38,7 @@ class TaskService(
 	private val taskRepository: TaskRepository,
 	private val userRepository: UserRepository,
 	private val projectService: ProjectService,
+	private val activityService: ActivityService,
 	private val sortResolver: TaskSortResolver,
 	private val mapper: TaskMapper,
 	private val clock: Clock,
@@ -82,6 +83,7 @@ class TaskService(
 				project = project,
 			),
 		)
+		activityService.record(task, userRepository.getReferenceById(userId), from = null, to = task.status)
 		return mapper.toResponse(task)
 	}
 
@@ -90,17 +92,17 @@ class TaskService(
 		val task = getOwnedTask(taskId, userId)
 		task.title = request.title.trim()
 		task.description = request.description.cleaned()
-		task.status = requireNotNull(request.status)
 		task.priority = requireNotNull(request.priority)
 		task.dueDate = request.dueDate
 		task.assignee = resolveAssignee(request.assigneeId)
+		changeStatus(task, requireNotNull(request.status), userId)
 		return mapper.toResponse(task)
 	}
 
 	@Transactional
 	fun updateStatus(taskId: Long, userId: Long, status: TaskStatus): TaskResponse {
 		val task = getOwnedTask(taskId, userId)
-		task.status = status
+		changeStatus(task, status, userId)
 		return mapper.toResponse(task)
 	}
 
@@ -120,6 +122,14 @@ class TaskService(
 			projectId, TaskStatus.DONE, LocalDate.now(clock),
 		)
 		return ProjectSummaryResponse(total = byStatus.values.sum(), byStatus = byStatus, overdue = overdue)
+	}
+
+	/** The single place a status changes, so every change (PUT or PATCH) lands in the activity log. */
+	private fun changeStatus(task: Task, newStatus: TaskStatus, userId: Long) {
+		val previous = task.status
+		if (previous == newStatus) return
+		task.status = newStatus
+		activityService.record(task, userRepository.getReferenceById(userId), from = previous, to = newStatus)
 	}
 
 	private fun getOwnedTask(taskId: Long, userId: Long): Task =
