@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { AppLayout } from './components/AppLayout'
 import { GuestRoute, ProtectedRoute } from './components/ProtectedRoute'
 import { LoginPage } from './pages/LoginPage'
+import { ProjectBoardPage } from './pages/ProjectBoardPage'
 import { ProjectsPage } from './pages/ProjectsPage'
 import { RegisterPage } from './pages/RegisterPage'
 
@@ -16,6 +17,7 @@ function App() {
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
           <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/projects/:projectId" element={<ProjectBoardPage />} />
         </Route>
       </Route>
 

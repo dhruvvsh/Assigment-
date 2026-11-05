@@ -1,0 +1,102 @@
+.card {
+  padding: 0.75rem 0.85rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left-width: 4px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.overdue {
+  border-color: var(--color-danger);
+  background: var(--color-danger-bg);
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+
+.badge {
+  flex-shrink: 0;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.LOW {
+  background: #e3f4e8;
+  color: #1f6b3a;
+}
+
+.MEDIUM {
+  background: #fff1d6;
+  color: #7a5300;
+}
+
+.HIGH {
+  background: #fde0e3;
+  color: #9d1f2d;
+}
+
+.description {
+  margin: 0.4rem 0 0;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 0.75rem;
+  margin: 0.6rem 0;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.dueOverdue {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+.overdueBadge {
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 4px;
+  background: var(--color-danger);
+  color: #fff;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.statusLabel {
+  display: block;
+}
+
+.select {
+  width: 100%;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
