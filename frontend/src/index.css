@@ -1,4 +1,50 @@
+:root {
+  --color-bg: #f4f6fa;
+  --color-surface: #ffffff;
+  --color-text: #1b2430;
+  --color-muted: #5f6b7a;
+  --color-border: #d9dfe8;
+  --color-primary: #2f5fd0;
+  --color-primary-hover: #244bb0;
+  --color-danger: #c62f3e;
+  --color-danger-bg: #fdecee;
+  --color-warning-bg: #fff6e0;
+  --color-warning-text: #7a5300;
+  --radius: 8px;
+  --shadow: 0 1px 3px rgba(20, 30, 50, 0.1);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--color-text);
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--color-bg);
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 0.5rem;
+  line-height: 1.25;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
