@@ -80,8 +80,19 @@
   text-transform: uppercase;
 }
 
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .statusLabel {
   display: block;
+  flex: 1;
+  min-width: 0;
+}
+
+.edit {
+  padding: 0.3rem 0.75rem;
 }
 
 .select {

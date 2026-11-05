@@ -9,9 +9,10 @@ interface BoardColumnProps {
   /** The id of the task whose status is currently being saved, if any. */
   busyTaskId?: number
   onStatusChange: (task: Task, status: TaskStatus) => void
+  onEdit: (task: Task) => void
 }
 
-export function BoardColumn({ status, tasks, busyTaskId, onStatusChange }: BoardColumnProps) {
+export function BoardColumn({ status, tasks, busyTaskId, onStatusChange, onEdit }: BoardColumnProps) {
   return (
     <section className={styles.column} aria-label={STATUS_LABELS[status]}>
       <h2 className={styles.heading}>
@@ -22,7 +23,13 @@ export function BoardColumn({ status, tasks, busyTaskId, onStatusChange }: Board
       ) : (
         <div className={styles.list}>
           {tasks.map((task) => (
-            <TaskCard key={task.id} task={task} busy={task.id === busyTaskId} onStatusChange={onStatusChange} />
+            <TaskCard
+              key={task.id}
+              task={task}
+              busy={task.id === busyTaskId}
+              onStatusChange={onStatusChange}
+              onEdit={onEdit}
+            />
           ))}
         </div>
       )}

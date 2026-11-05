@@ -1,6 +1,7 @@
 import { formatDate } from '../lib/format'
 import { PRIORITY_LABELS, STATUS_LABELS, STATUSES } from '../lib/taskMeta'
 import type { Task, TaskStatus } from '../types'
+import { Button } from './Button'
 import styles from './TaskCard.module.css'
 
 interface TaskCardProps {
@@ -8,9 +9,10 @@ interface TaskCardProps {
   /** True while this card's status change is being saved. */
   busy?: boolean
   onStatusChange: (task: Task, status: TaskStatus) => void
+  onEdit: (task: Task) => void
 }
 
-export function TaskCard({ task, busy = false, onStatusChange }: TaskCardProps) {
+export function TaskCard({ task, busy = false, onStatusChange, onEdit }: TaskCardProps) {
   const className = task.overdue ? `${styles.card} ${styles.overdue}` : styles.card
 
   return (
@@ -32,21 +34,26 @@ export function TaskCard({ task, busy = false, onStatusChange }: TaskCardProps) 
         <span>{task.assignee ? task.assignee.name : 'Unassigned'}</span>
       </div>
 
-      <label className={styles.statusLabel}>
-        <span className={styles.srOnly}>Status for {task.title}</span>
-        <select
-          className={styles.select}
-          value={task.status}
-          disabled={busy}
-          onChange={(e) => onStatusChange(task, e.target.value as TaskStatus)}
-        >
-          {STATUSES.map((status) => (
-            <option key={status} value={status}>
-              {STATUS_LABELS[status]}
-            </option>
-          ))}
-        </select>
-      </label>
+      <div className={styles.actions}>
+        <label className={styles.statusLabel}>
+          <span className={styles.srOnly}>Status for {task.title}</span>
+          <select
+            className={styles.select}
+            value={task.status}
+            disabled={busy}
+            onChange={(e) => onStatusChange(task, e.target.value as TaskStatus)}
+          >
+            {STATUSES.map((status) => (
+              <option key={status} value={status}>
+                {STATUS_LABELS[status]}
+              </option>
+            ))}
+          </select>
+        </label>
+        <Button variant="secondary" className={styles.edit} onClick={() => onEdit(task)} aria-label={`Edit ${task.title}`}>
+          Edit
+        </Button>
+      </div>
     </article>
   )
 }
