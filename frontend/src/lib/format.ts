@@ -9,3 +9,8 @@ export function formatDate(value: string): string {
   const [year, month, day] = value.split('-').map(Number)
   return new Date(year, month - 1, day).toLocaleDateString(undefined, options)
 }
+
+/** A full timestamp with the time of day, in the viewer's timezone. */
+export function formatDateTime(value: string): string {
+  return new Date(value).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
+}

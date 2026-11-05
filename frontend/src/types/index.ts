@@ -90,3 +90,20 @@ export interface TaskQuery {
   sortBy?: 'dueDate' | 'priority'
   direction?: 'asc' | 'desc'
 }
+
+export interface TaskActivity {
+  id: number
+  fromStatus: TaskStatus | null
+  toStatus: TaskStatus
+  changedBy: User
+  changedAt: string
+}
+
+/** Fields shared by create and edit. Empty optional values are sent as null. */
+export interface TaskInput {
+  title: string
+  description: string
+  priority: TaskPriority
+  dueDate: string | null
+  assigneeId: number | null
+}

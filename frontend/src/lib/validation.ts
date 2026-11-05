@@ -39,3 +39,30 @@ export function validateProject({ name, description }: { name: string; descripti
   if (description.length > 1000) errors.description = 'Description must be at most 1000 characters'
   return errors
 }
+
+interface TaskFormValues {
+  title: string
+  description: string
+  dueDate: string
+}
+
+/** Today as YYYY-MM-DD in the viewer's timezone, the format a date input uses. */
+export function todayAsInputValue(now: Date = new Date()): string {
+  const month = String(now.getMonth() + 1).padStart(2, '0')
+  const day = String(now.getDate()).padStart(2, '0')
+  return `${now.getFullYear()}-${month}-${day}`
+}
+
+/** A past due date is rejected only when creating, matching the backend rule. */
+export function validateTask(
+  { title, description, dueDate }: TaskFormValues,
+  mode: 'create' | 'edit',
+  today: string = todayAsInputValue(),
+): FieldErrors {
+  const errors: FieldErrors = {}
+  if (!title.trim()) errors.title = 'Title is required'
+  else if (title.trim().length > 120) errors.title = 'Title must be at most 120 characters'
+  if (description.length > 2000) errors.description = 'Description must be at most 2000 characters'
+  if (mode === 'create' && dueDate && dueDate < today) errors.dueDate = 'Due date cannot be in the past'
+  return errors
+}
