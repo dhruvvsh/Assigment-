@@ -1,0 +1,31 @@
+.section {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.section h3 {
+  font-size: 1rem;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.time {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.empty {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
