@@ -1,5 +1,8 @@
-# Local PostgreSQL for development: `docker compose up -d db`
-# The backend and frontend services are added in the final part.
+# Start everything with one command:   docker compose up --build
+# App: http://localhost:3000   (log in with demo@taskflow.com / Password123!)
+#
+# Every value below can be overridden with environment variables or a root-level .env file
+# (git-ignored). The defaults are for local use only.
 services:
   db:
     image: postgres:16-alpine
@@ -8,7 +11,7 @@ services:
       POSTGRES_USER: ${DB_USERNAME:-taskflow}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-taskflow}
     ports:
-      - "5432:5432"
+      - "${DB_PORT:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -16,6 +19,30 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+
+  backend:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # To use an external database (e.g. Supabase) instead of the db service above,
+      # set DB_URL, DB_USERNAME and DB_PASSWORD in a root .env file.
+      DB_URL: ${DB_URL:-jdbc:postgresql://db:5432/taskflow}
+      DB_USERNAME: ${DB_USERNAME:-taskflow}
+      DB_PASSWORD: ${DB_PASSWORD:-taskflow}
+      # Local-only fallback; set a real random value (32+ characters) anywhere shared.
+      JWT_SECRET: ${JWT_SECRET:-local-dev-only-secret-change-me-0123456789}
+      SEED_DEMO_DATA: ${SEED_DEMO_DATA:-true}
+    ports:
+      - "${BACKEND_PORT:-8080}:8080"
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
 
 volumes:
   pgdata:
