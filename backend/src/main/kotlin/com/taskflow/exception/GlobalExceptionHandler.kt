@@ -52,6 +52,10 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 		return build(statusCode, message, request.path())
 	}
 
+	@ExceptionHandler(BadRequestException::class)
+	fun handleBadRequest(ex: BadRequestException, request: HttpServletRequest) =
+		build(HttpStatus.BAD_REQUEST, ex.message, request.requestURI, ex.fieldErrors)
+
 	@ExceptionHandler(NotFoundException::class)
 	fun handleNotFound(ex: NotFoundException, request: HttpServletRequest) =
 		build(HttpStatus.NOT_FOUND, ex.message, request.requestURI)
